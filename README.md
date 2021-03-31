@@ -1,8 +1,9 @@
 # Linux_Rogue
 - make a rogue game (a root of Diablo)
 
-### 이미지
-![캡처](https://user-images.githubusercontent.com/50474972/113022131-3d68ee00-91bf-11eb-96d6-b7ee4f715637.PNG)
+### 실행영상
+https://user-images.githubusercontent.com/50474972/113121164-5324f480-924d-11eb-991f-e70bfbdecc8b.mp4
+
 ```
   🧍 : 플레이어
   ⬛ : 벽
@@ -25,6 +26,4 @@
 ### 사용 
 - ncurses : 새 창 띄우기
 - locale : Unicode
-
-### 추가 예정
-- Thread를 활용한 몬스터 움직임 추가 예정
+- pthread : 몬스터의 움직임
