@@ -1,10 +1,13 @@
 #include "game.h"
 
 // setting a random map
-void make_map(char map[Y][X + 1])
+void make_map(MAP *game)
 {
 	int t_y, t_x;
 
+	game->ny = 1;
+	game->nx = 1;
+	game->hp = 100;
 	// make a basic setting
 	for (int i = 0; i < Y; i++)
 	{
@@ -13,11 +16,11 @@ void make_map(char map[Y][X + 1])
 		for (j = 0; j < X; j++)
 		{
 			if (i == 0 || i == Y - 1 || j == 0 || j == X - 1)
-				map[i][j] = '#';
+				game->map[i][j] = '#';
 			else
-				map[i][j] = ' ';
+				game->map[i][j] = ' ';
 		}
-		map[i][j] = '\0';
+		game->map[i][j] = '\0';
 	}
 	srand((unsigned int)time(NULL));	
 
@@ -27,7 +30,7 @@ void make_map(char map[Y][X + 1])
 		t_y = rand() % (Y - 2) + 1;
 		t_x = rand() % (X - 2) + 1;
 		if (t_y != 1 && t_x != 1)
-			map[t_y][t_x] = '#';
+			game->map[t_y][t_x] = '#';
 	}
 
 	// make a random apple
@@ -36,7 +39,7 @@ void make_map(char map[Y][X + 1])
 		t_y = rand() % (Y - 2) + 1;
 		t_x = rand() % (X - 2) + 1;
 		if (t_y != 1 && t_x != 1)
-			map[t_y][t_x] = 'a';
+			game->map[t_y][t_x] = 'a';
 	}
 
 	// make a random thorn
@@ -45,7 +48,7 @@ void make_map(char map[Y][X + 1])
  		t_y = rand() % (Y - 2) + 1;
 		t_x = rand() % (X - 2) + 1;
 		if (t_y != 1 && t_x != 1)
-			map[t_y][t_x] = '^';
+			game->map[t_y][t_x] = '^';
 	}
 
 	// make a random monster
@@ -54,7 +57,7 @@ void make_map(char map[Y][X + 1])
 		t_y = rand() % (Y - 2) + 1;
 		t_x = rand() % (X - 2) + 1;
 		if (t_y != 1 && t_x != 1)
-			map[t_y][t_x] = 'M';
+			game->map[t_y][t_x] = 'M';
 	}
 
 	// make a random holy grail
@@ -64,56 +67,56 @@ void make_map(char map[Y][X + 1])
 		t_x = rand() % (X - 2) + 1;
 		if (t_y != 1 && t_x != 1)
 		{
-			map[t_y][t_x] = 'Y';
+			game->map[t_y][t_x] = 'Y';
 			break;
 		}
 	}
 }
 
 // print a map
-void print_map(char map[Y][X + 1], int ny, int nx, int hp)
+void print_map(MAP game)
 {
 	clear();
 	for (int y = 0; y < Y; y++)
 	{
 		for (int x = 0; x < X; x++)
 		{
-			if (y==ny && x==nx)
+			if (y==game.ny && x==game.nx)
 				printw("🧍");
-			else if (map[y][x] == '#')
+			else if (game.map[y][x] == '#')
 				printw("%s", "⬛");
-			else if (map[y][x] == 'M')
+			else if (game.map[y][x] == 'M')
 				printw("%s", "🐲");
-			else if (map[y][x] == 'Y')
+			else if (game.map[y][x] == 'Y')
 				printw("%s", "🌟");
-			else if (map[y][x] == 'a')
+			else if (game.map[y][x] == 'a')
 				printw("%s", "🍓");
-			else if (map[y][x] == '^')
+			else if (game.map[y][x] == '^')
 				printw("%s", "🔥");
-			else if (map[y][x] == ' ')
+			else if (game.map[y][x] == ' ')
 				printw("%s", "  " );
 		}
 		printw("\n");
 	}
-	printw("\n\n\n HP : %d", hp);
+	printw("\n\n\n HP : %d", game.hp);
 	refresh();
 }
 
 // judge if movable
-bool is_movable(char map[Y][X + 1], int n_y, int n_x)
+bool is_movable(MAP game, int n_y, int n_x)
 {
 	if (n_y < 0 || n_y >= Y || n_x < 0 || n_x >= X)
 		return (false);
-	else if (map[n_y][n_x] == '#')
+	else if (game.map[n_y][n_x] == '#')
 		return (false);
 	return (true);
 }
 
 // judge meeting a monster, a holy grail or a thorn
-bool touch_MorY(char map[Y][X + 1], int ny, int nx, int hp)
+bool touch_MorY(MAP game)
 {
-	if (map[ny][nx] == 'M')
-	{
+	if (game.map[game.ny][game.nx] == 'M')
+	{	
 		usleep(1000 * 500);
 		clear();
 		refresh();
@@ -123,7 +126,7 @@ bool touch_MorY(char map[Y][X + 1], int ny, int nx, int hp)
 		sleep(1);
 		return (true);
 	}
-	else if (map[ny][nx] == 'Y')
+	else if (game.map[game.ny][game.nx] == 'Y')
 	{
 		usleep(1000 * 500);
 		clear();
@@ -131,14 +134,14 @@ bool touch_MorY(char map[Y][X + 1], int ny, int nx, int hp)
 		move(10, 20);
 		printw("WIN\n");
 		move(11, 20);
-		printw("HP : %d\n", hp);
+		printw("HP : %d\n", game.hp);
 		refresh();
 		sleep(1);
 		return (true);
 	}
-	else if (map[ny][nx] == '^')
+	else if (game.map[game.ny][game.nx] == '^')
 	{
-		if (hp == 0)
+		if (game.hp == 0)
 		{
 			usleep(1000 * 500);
 			clear();
@@ -154,14 +157,12 @@ bool touch_MorY(char map[Y][X + 1], int ny, int nx, int hp)
 }
 
 // meet apple, or thorn
-void touch_AorT(char map[Y][X + 1], int ny, int nx, int *hp)
+void touch_AorT(MAP *game)
 {
-	if (map[ny][nx] == '^') *hp -= 10;
-	else if (map[ny][nx] == 'a')
+	if (game->map[game->ny][game->nx] == '^') game->hp -= 10;
+	else if (game->map[game->ny][game->nx] == 'a')
 	{
-		*hp += 10;
-		map[ny][nx] = ' ';
+		game->hp += 10;
+		game->map[game->ny][game->nx] = ' ';
 	}
 }
-
-

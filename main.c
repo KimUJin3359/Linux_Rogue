@@ -1,9 +1,7 @@
 #include "game.h"
 
-static char map[Y][X + 1];
-static int ny = 1;
-static int nx = 1;
-static int hp = 100;
+static MAP game;
+pthread_mutex_t mlock;
 
 int main()
 {
@@ -15,29 +13,35 @@ int main()
 	// input keyboard
 	nodelay(stdscr, TRUE);
 	keypad(stdscr, TRUE);
-	make_map(map);
+	make_map(&game);
 
+	pthread_t tid;
+	pthread_create(&tid, NULL, monster_move, &game);
 	while (1)
 	{
 		curs_set(0);
-		if (touch_MorY(map, ny, nx, hp))
+		if (touch_MorY(game))
 			break;
-		print_map(map, ny, nx, hp);
+		pthread_mutex_lock(&mlock);
+		print_map(game);
+		pthread_mutex_unlock(&mlock);
 		ch = getch();
 		usleep(1000 * 100);
 		if (ch == ERR)
 			ch = 0;
-		if (ch == KEY_LEFT && is_movable(map, ny, nx - 1) && nx--)
-			touch_AorT(map, ny, nx, &hp);
-		else if (ch == KEY_RIGHT && is_movable(map, ny, nx + 1) && nx++)
-			touch_AorT(map, ny, nx, &hp);
-		else if (ch == KEY_UP && is_movable(map, ny - 1, nx) && ny--)
-			touch_AorT(map, ny, nx, &hp);
-		else if (ch == KEY_DOWN && is_movable(map, ny + 1, nx) && ny++)
-			touch_AorT(map, ny, nx, &hp);
+		if (ch == KEY_LEFT && is_movable(game, game.ny, game.nx - 1) && game.nx--)
+			touch_AorT(&game);
+		else if (ch == KEY_RIGHT && is_movable(game, game.ny, game.nx + 1) && game.nx++)
+			touch_AorT(&game);
+		else if (ch == KEY_UP && is_movable(game, game.ny - 1, game.nx) && game.ny--)
+			touch_AorT(&game);
+		else if (ch == KEY_DOWN && is_movable(game, game.ny + 1, game.nx) && game.ny++)
+			touch_AorT(&game);
 		else if (ch == ESC)
 			break;
 	}
+	pthread_cancel(tid);
+	pthread_join(tid, NULL);
 	endwin();
 	return (0);
 }

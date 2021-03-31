@@ -1,13 +1,13 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra
 
 TARGET = game
 
-SRCS = main.c game.c
+SRCS = main.c game.c monster.c
 OBJS = ${SRCS:.c=.o}
 
 ${TARGET} : ${OBJS}
-	${CC} -o $@ $^ -lncursesw
+	${CC} -o $@ $^ -lncursesw -lpthread
 
 .c.o :
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o} -I ./ 
