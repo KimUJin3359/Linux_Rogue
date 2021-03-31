@@ -37,7 +37,7 @@ void *monster_move(void *ptr)
 				{
 					temp = rand() % 4;
 					// map size check && wall check
-					if (i + dy[temp] >= 0 && i + dy[temp] < Y && j + dx[temp] >=0 && j + dx[temp] < X && game->map[i + dy[temp]][j + dx[temp]] == ' ')
+					if (i + dy[temp] >= 0 && i + dy[temp] < Y && j + dx[temp] >=0 && j + dx[temp] < X && game->map[i + dy[temp]][j + dx[temp]] != '#')
 					{
 						game->map[i + dy[temp]][j + dx[temp]] = 'M';
 						pthread_mutex_lock(&mlock);
