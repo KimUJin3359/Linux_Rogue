@@ -8,7 +8,7 @@ int main()
 	int ch;
 
 	// korean
-	setlocale(LC_CTYPE, "ko_KR.utf8");
+	setlocale(LC_ALL, "");
 	initscr();
 	// input keyboard
 	nodelay(stdscr, TRUE);

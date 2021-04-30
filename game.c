@@ -82,19 +82,19 @@ void print_map(MAP game)
 		for (int x = 0; x < X; x++)
 		{
 			if (y==game.ny && x==game.nx)
-				printw("🧍");
+				printw("%s", "🤺");
 			else if (game.map[y][x] == '#')
-				printw("%s", "⬛");
+				printw("%s", "🏔 ");
 			else if (game.map[y][x] == 'M')
-				printw("%s", "🐲");
+				printw("%s", "🐉");
 			else if (game.map[y][x] == 'Y')
 				printw("%s", "🌟");
 			else if (game.map[y][x] == 'a')
-				printw("%s", "🍓");
+				printw("%s", "🐟");
 			else if (game.map[y][x] == '^')
 				printw("%s", "🔥");
 			else if (game.map[y][x] == ' ')
-				printw("%s", "  " );
+				printw("%s", "  ");
 		}
 		printw("\n");
 	}
