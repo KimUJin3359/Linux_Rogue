@@ -2,8 +2,21 @@
 - make a rogue game (a root of Diablo)
 
 ### ncurses 설치 방법
+#### Linux
+```
+sudo apt install libncurses5-dev
 ```
 
+#### Mac
+```
+curl -O ftp://ftp.gnu.org/gnu/ncurses/ncurses-6.2.tar.gz
+tar -xzvf ncurses-6.2.tar.gz
+cd ncurses-6.2
+./configure --prefix=/usr/local \
+--without-cxx --without-cxx-binding --without-ada --without-progs --without-curses-h \
+--with-shared --without-debug \
+--enable-widec --enable-const --enable-ext-colors --enable-sigwinch --enable-wgetch-events \
+sudo make install
 ```
 
 ### 실행영상
