@@ -1,6 +1,11 @@
 # Linux_Rogue
 - make a rogue game (a root of Diablo)
 
+### ncurses 설치 방법
+```
+
+```
+
 ### 실행영상
 ![영상](https://user-images.githubusercontent.com/50474972/113121643-d0506980-924d-11eb-9d40-d3f6467e63fd.gif)
 
