@@ -23,11 +23,11 @@ sudo make install
 ![영상](https://user-images.githubusercontent.com/50474972/113121643-d0506980-924d-11eb-9d40-d3f6467e63fd.gif)
 
 ```
-  🧍 : 플레이어
-  ⬛ : 벽
-  🐲 : 몬스터, 몬스터에게 갈 시 죽음
+  🤺 : 플레이어
+  🏔 : 벽
+  🐉 : 몬스터, 몬스터에게 갈 시 죽음
   🌟 : 별, 획득 시 게임 클리어
-  🍓 : 딸기, 획득 시 체력 10 회복
+  🐟 : 음식, 획득 시 체력 10 회복
   🔥 : 불, 닿을 시 체력 10 감소
 ```
 
@@ -45,3 +45,9 @@ sudo make install
 - ncurses : 새 창 띄우기
 - locale : Unicode
 - pthread : 몬스터의 움직임
+
+#### 알게된 점
+- 같은 유니코드라해도 byte가 다를 수 있음
+
+
+
