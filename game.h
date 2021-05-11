@@ -9,15 +9,16 @@
 #include <unistd.h>
 #include <pthread.h>
 
-#define Y 20
-#define X Y
 #define ESC 27
 
 typedef struct	MAP{
-	char map[Y][X + 1];
-	int ny;
-	int nx;
+	char **map;
+	// size of map
+	int map_y, map_x;
+	// character's coordination
+	int ny, nx;
 	int hp;
+	// if character dies or not
 	int flag;
 }				MAP;
 
@@ -29,6 +30,7 @@ bool touch_MorY(MAP m);
 void touch_AorT(MAP *m);
 
 // thread.c
+// monster moves each 0.2 secs
 void *monster_move(void *ptr);
 
 #endif

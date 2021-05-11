@@ -13,6 +13,11 @@ int main()
 	// input keyboard
 	nodelay(stdscr, TRUE);
 	keypad(stdscr, TRUE);
+	// init map size
+	getmaxyx(stdscr, game.map_y, game.map_x);
+	// for character htp status bar
+	game.map_x /= 2;
+	game.map_y -= 2;
 	make_map(&game);
 
 	pthread_t tid;
